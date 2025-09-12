@@ -1,1 +1,1 @@
-Just my course project
+Just my course work
