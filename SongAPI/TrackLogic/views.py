@@ -17,7 +17,3 @@ def getSpecificTrack(request,track_id):
         raise Http404("Track doesnt exist") 
     return HttpResponse(track)
 
-# def createNewTrack(request,nm,at,des,dur,path):
-#     try:
-
-#     except :

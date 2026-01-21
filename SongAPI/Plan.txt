@@ -1,0 +1,13 @@
+pages:
+
+Playlist
+-Create
+-Display
+
+Track
+-Create
+-Display
+
+User
+-Create
+-Display

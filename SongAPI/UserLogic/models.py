@@ -1,11 +1,18 @@
 from django.db import models
+from django.core.files.storage import FileSystemStorage 
+import os
+import uuid
+
+def users_photo_path(instance, filename):
+    filetype = os.path.splitext(filename)[1].lower()
+    return f"photo/users/{uuid.uuid4()}{filetype}"
 
 class Clients(models.Model):
     id = models.PositiveIntegerField(primary_key=True,unique=True)
     name = models.CharField(max_length=50)
     password = models.CharField(max_length=128)
     email = models.EmailField(unique=True)
-    photo = models.FileField(upload_to='Photo/User')
+    photo = models.ImageField(upload_to=users_photo_path)
 
     def __str__(self):
         responce = f"Id:{self.id}\n"
@@ -23,4 +30,4 @@ class Clients(models.Model):
 
 class Author(models.Model):
     user = models.ForeignKey(Clients , on_delete=models.CASCADE)
-    tracks = models.ManyToManyField("tracks.TrackLogic")
+    subsribes = models.IntegerField()

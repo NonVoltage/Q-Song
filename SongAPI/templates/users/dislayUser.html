@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="icon" type="image/svg+xml" href="{% static 'Logo.svg' %}">
+    
+
+</head>
+<body>
+    
+{% if name %}
+    <p>{{name}}</p>
+    <p>{{email}}</p>
+    <img src="{{photoPath.url}}" alt="user" height="400px" width="300 px">
+{% else %}
+    <p>NoNe</p>
+
+{% endif %}
+</body>
+</html>
+
+
+
+

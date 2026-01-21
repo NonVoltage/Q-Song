@@ -17,6 +17,25 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+import TrackLogic.views as TrackLogic 
+import UserLogic.views as UserLogic
+from django.conf import settings
+from django.conf.urls.static import static
+
+
+
 urlpatterns = [
+    #User part
+
+    path('', UserLogic.getUserByAuth,name="Main page ... maybe"),
     path('admin/', admin.site.urls),
+    path('user/<int:userId>',UserLogic.showUserInfoById,name="User display"),
+
+    #Track part
+
+    path('tracks', TrackLogic.getAllTracks , name = 'Get all track'),
+    path('track/<int:track_id>/result/',TrackLogic.getSpecificTrack,name='Get one track')
+
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

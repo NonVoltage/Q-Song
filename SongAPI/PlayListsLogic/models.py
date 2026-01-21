@@ -1,15 +1,21 @@
 from django.db import models
-from TrackLogic.models import Track
-from UserLogic.models import Clients
+import uuid
+import os
+
+def playlist_photo_path(instance, filename):
+    filetype = os.path.splitext(filename)[1].lower()
+    return f"photo/playlists/{uuid.uuid4()}{filetype}"
+
 
 class PlayList(models.Model):
     id = models.PositiveIntegerField(primary_key=True,unique=True)
-    owner = models.ForeignKey(Clients , on_delete=models.CASCADE)
+    owner = models.ForeignKey(to='UserLogic.Clients' , on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=300,default='')
     number_of_track = models.PositiveIntegerField()
-    createDate = models.DateField("date published")
-    tracks = models.ManyToManyField(Track)
+    createDate = models.DateField()
+    tracks = models.ManyToManyField(to='TrackLogic.Track')
+    photo = models.ImageField(upload_to=playlist_photo_path)
 
 
     def __str__(self):

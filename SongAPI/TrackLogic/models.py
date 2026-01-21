@@ -1,16 +1,27 @@
 from django.db import models
-from UserLogic.models import Clients
+import uuid
+import os
+
+def track_photo_path(instance, filename):
+    filetype = os.path.splitext(filename)[1].lower()
+    return f"photo/tracks/{uuid.uuid4()}{filetype}"
+
+def track_file_path(instance, filename):
+    filetype = os.path.splitext(filename)[1].lower()
+    genre = instance.genre.slug 
+    return f"tracks/{genre}/{uuid.uuid4()}{filetype}"
+
 
 class Track(models.Model):
     id = models.PositiveIntegerField(primary_key=True,unique=True)
     name = models.CharField(max_length= 100)
-    author = models.ForeignKey(Clients , on_delete=models.CASCADE)
+    authors = models.ForeignKey(to='UserLogic.Author' , on_delete=models.CASCADE)
     description = models.CharField(max_length=300)
     duration = models.PositiveIntegerField()
-    photo = models.FileField(upload_to='Photo/Track')
+    photo = models.ImageField(upload_to=track_photo_path)
     postDate = models.DateField()
     genre = models.CharField(max_length=40)
-    path = models.FileField(upload_to=f'Songs/{genre}')
+    path = models.FileField(upload_to=track_file_path)
     likes = models.PositiveIntegerField()
 
     
